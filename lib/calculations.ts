@@ -19,19 +19,21 @@ type Standar = {
   nilai_max: number;
 };
 
+type DetailItem = {
+  kategori: string;
+  nilai: number;
+  min: number;
+  max: number;
+  status: 'sesuai' | 'kurang' | 'berlebih';
+};
+
 type NutritionResult = {
   kalori: number;
   protein: number;
   lemak: number;
   karbohidrat: number;
   status: 'sesuai' | 'kurang' | 'berlebih';
-  details: {
-    kategori: string;
-    nilai: number;
-    min: number;
-    max: number;
-    status: 'sesuai' | 'kurang' | 'berlebih';
-  }[];
+  details: DetailItem[];
 };
 
 export function calculateNutrition(
@@ -73,8 +75,8 @@ export function calculateNutrition(
   totalLemak = Math.round(totalLemak * 100) / 100;
   totalKarbohidrat = Math.round(totalKarbohidrat * 100) / 100;
 
-  // Compare with standards
-  const details = [];
+  // Compare with standards (Perubahan utama di sini: tambahkan tipe DetailItem[])
+  const details: DetailItem[] = [];
   let overallStatus: 'sesuai' | 'kurang' | 'berlebih' = 'sesuai';
 
   const nutrisiMap: { [key: string]: number } = {
